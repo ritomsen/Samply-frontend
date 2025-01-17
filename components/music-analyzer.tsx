@@ -8,9 +8,22 @@ import { Mic, Loader2, StopCircle } from 'lucide-react'
 
 // Placeholder functions for backend processes
 const identifySong = async (audioBlob: Blob): Promise<{ title: string, artist: string }> => {
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 2000))
-  return { title: "Never Gonna Give You Up", artist: "Rick Astley" }
+  const formData = new FormData()
+
+  formData.append("file", audioBlob, "recorded_audio.wav")
+  
+  const response = await fetch("http://localhost:8000/music/", {
+    method: "POST",
+    body: formData,
+  })
+
+  if (!response.ok) {
+    throw new Error(`Error identifying song: ${response.status} - ${response.statusText}`)
+  }
+  const data = await response.json()
+  // console.log("Response data:", data)
+  const { title, artist } = data
+  return { title: title, artist: artist }
 }
 
 const analyzeSamples = async (songId: string): Promise<string[]> => {
