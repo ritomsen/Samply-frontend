@@ -2,18 +2,10 @@
 
 import type React from "react"
 import { createContext, useState, useContext } from "react"
+import { Song, Sample } from "../types/music"
 
-type Song = {
-  song: string
-  artist: string
-  img_url: string
-}
 
-type Sample = {
-  song: string
-  artist: string
-  year: string
-}
+
 
 type SongContextType = {
   analyzedSong: Song | null

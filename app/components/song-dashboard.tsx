@@ -6,6 +6,7 @@ import { ArrowLeft, Music, Calendar, Clock, Mic, Headphones, BarChart2 } from "l
 import Image from "next/image"
 import Link from "next/link"
 import { useSongContext } from "../contexts/SongContext"
+import { SamplesGrid } from "./samples-grid"
 
 export default function SongDashboard() {
   const { analyzedSong, identifiedSamples } = useSongContext()
@@ -60,8 +61,8 @@ export default function SongDashboard() {
               />
             </div>
             <div className="flex-1">
-              <h2 className="text-2xl font-semibold">{analyzedSong.song}</h2>
-              <p className="text-xl text-gray-600">{analyzedSong.artist}</p>
+              <h2 className="text-3xl font-semibold">{analyzedSong.song}</h2>
+              <p className="text-2xl text-gray-600">{analyzedSong.artist}</p>
               <div className="mt-4 grid grid-cols-2 gap-4">
                 <div className="flex items-center">
                   <Clock className="h-5 w-5 mr-2 text-blue-500" />
@@ -118,34 +119,15 @@ export default function SongDashboard() {
               </CardContent>
             </Card>
           </div>
+
           {identifiedSamples.length > 0 && (
             <div className="mt-8">
               <h3 className="text-2xl font-semibold mb-4 mx-auto text-center">Samples Used</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {identifiedSamples.map((sample, index) => (
-                  <Card key={index} className="bg-gray-50">
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-3">
-                        <Music className="h-6 w-6 text-blue-500" />
-                        <div>
-                          <h5 className="font-semibold">{sample.song}</h5>
-                          <p className="text-sm text-gray-600">{sample.artist}</p>
-                        </div>
-                      </div>
-                      <div className="mt-2 flex items-center text-sm text-gray-500">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        <span>{sample.year}</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <SamplesGrid samples={identifiedSamples} />
             </div>
           )}
         </CardContent>
-        
       </Card>
-      
     </div>
   )
 }
