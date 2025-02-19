@@ -7,8 +7,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { useSongContext } from "../contexts/SongContext"
 import { SamplesGrid } from "./samples-grid"
+interface SongDashboardProps {
+  setActiveTab: (tab: string) => void
+}
 
-export default function SongDashboard() {
+export default function SongDashboard({ setActiveTab }: SongDashboardProps) {
   const { analyzedSong, identifiedSamples } = useSongContext()
 
   // Placeholder data for additional information
@@ -25,11 +28,9 @@ export default function SongDashboard() {
   if (!analyzedSong) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <Link href="/">
-          <Button variant="outline" className="mb-4">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Analyzer
-          </Button>
-        </Link>
+        <Button variant="outline" className="mb-4" onClick={() => setActiveTab("analyze")}>
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Analyzer
+        </Button>
         <Card className="w-full max-w-4xl mx-auto">
           <CardContent className="p-6">
             <p className="text-center">No song data available. Please analyze a song first.</p>
@@ -44,11 +45,9 @@ export default function SongDashboard() {
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle className="text-3xl font-bold">Song Details</CardTitle>
-          <Link href="/">
-            <Button variant="outline">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Analyzer
-            </Button>
-          </Link>
+          <Button variant="outline" className="mb-4" onClick={() => setActiveTab("analyze")}>
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Analyzer
+          </Button>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">

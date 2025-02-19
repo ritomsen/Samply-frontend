@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Mic, Loader2, StopCircle, Music, Calendar } from "lucide-react"
+import { Mic, Loader2, StopCircle, Music, Calendar, Info } from "lucide-react"
 import Link from "next/link"
 
 import { musicApiService } from "../services/musicApi"
@@ -13,7 +13,11 @@ import { SamplesGrid } from "./samples-grid"
 import { useAudioRecorder } from "../hooks/useAudioRecorder"
 import { useSongContext } from "../contexts/SongContext"
 
-export default function MusicAnalyzer() {
+interface MusicAnalyzerProps {
+  setActiveTab: (tab: string) => void
+}
+
+export default function MusicAnalyzer({ setActiveTab }: MusicAnalyzerProps) {
   const { analyzedSong, setAnalyzedSong, identifiedSamples, setIdentifiedSamples } = useSongContext()
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisProgress, setAnalysisProgress] = useState(0)
@@ -95,11 +99,12 @@ export default function MusicAnalyzer() {
             </div>
           )}
           {analyzedSong && (
-            <div className="flex justify-center mt-4">
-              <Link href="/song-dashboard">
-                <Button variant="outline">See More Info</Button>
-              </Link>
-            </div>
+            <div className="mt-4 flex justify-center">
+              <Button onClick={() => setActiveTab("song-dashboard")} variant="outline">
+                <Info className="mr-2 h-4 w-4" />
+                See More Info
+              </Button>
+          </div>
           )}
           {analyzedSong && <IdentifiedSong song={analyzedSong} />}
           {identifiedSamples.length > 0 && <SamplesGrid samples={identifiedSamples} />}

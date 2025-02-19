@@ -23,6 +23,7 @@ export function SamplesGrid({ samples }: SamplesGridProps) {
                     fill={true}
                     objectFit="cover"
                     className="rounded-md"
+                    loading="lazy"
                   />
                 </div>
                 <div>
