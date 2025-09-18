@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { SongProvider } from "./contexts/SongContext"
+import UserProfile from "./components/user-profile"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("analyze")
@@ -34,18 +35,7 @@ export default function Home() {
       case "song-dashboard":
         return <SongDashboard setActiveTab={setActiveTab} />
       case "library":
-        return (
-          <div className="container mx-auto px-4 py-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>Library</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>Your music library will be displayed here.</p>
-              </CardContent>
-            </Card>
-          </div>
-        )
+        return <UserProfile />
       case "playlists":
         return (
           <div className="container mx-auto px-4 py-8">

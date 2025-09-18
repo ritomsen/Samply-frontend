@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -21,9 +21,22 @@ export default function Layout({ children, activeTab, setActiveTab }: LayoutProp
   const [isConnected, setIsConnected] = useState(false)
 
   const handleSpotifyConnect = () => {
-    // Placeholder for Spotify connection logic
-    setIsConnected(true)
+    // Redirect the browser to the Spotify login endpoint
+    window.location.href = "http://localhost:8000/spotify/login"
+    
   }
+
+  useEffect(() => {
+    const checkSpotifyLogin = async () => {
+      // Including credentials ensures cookies (like session info) are sent along
+      const response = await fetch("http://localhost:8000/spotify/check-login", { credentials: "include" })
+      const data = await response.json()
+      setIsConnected(data.isConnected)
+
+      // Note: In development, React 18 Strict Mode may call this effect twice, which is expected and will not occur in production.
+    }
+    checkSpotifyLogin()
+  }, [])
 
   return (
     <div className="min-h-screen flex flex-col">
